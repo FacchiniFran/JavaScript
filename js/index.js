@@ -51,8 +51,8 @@ function mainLogin() {
                 }
 
                 alert('La contraseña ingresada es incorrecta. Favor vuelva a intentar');
-            } else if (userExists && !passExists) {
-
+            } else if (!userExists) {
+                
                 alert('El usuario ingresado no existe o es incorrecto. Favor reingrese el usuario\n\n(Favor recordar que el usuario diferencia minúsculas de mayúsculas)');
             }
 
