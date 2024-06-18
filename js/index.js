@@ -70,7 +70,7 @@ function mainLogin() {
                 let passInput = prompt('Ingrese su contraseña');
                 userANDpass[userInput] = passInput;
 
-                alert('Creación de usuario exitosa. Inicie sesión.');
+                alert('Creación de usuario exitosa.\n\nUsuario: ' + userInput + '\nContraseña: ' + passInput + '\n\nInicie sesión.');
                 userCreated = true;
             } else if (!userCreated) {
                 
