@@ -78,7 +78,7 @@ function mainLogin() {
             }
         }
 
-        alert('Favor ingrese "Iniciar Sesion" o "Crear Usuario".\n\n(Tenga en cuenta que las opciones deben ser escritas correctamente, con espacios y sin tildes)');
+        alert('Favor ingrese "Iniciar Sesion" o "Crear Usuario".\n\n(Tenga en cuenta que las opciones deben ser escritas con espacios y sin tildes)');
     } while (ask)
 }
 
