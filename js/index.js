@@ -1,11 +1,14 @@
-const userANDpass = { user1: 'pass1', user2: 'pass2', user3: 'pass3' };
+const users = [{userName: 'usuario1', password: 'pass1', mail: 'usuario1@gmail.com', tries: 0},
+    {userName: 'usuario2', password: 'pass2', mail: 'usuario2@gmail.com', tries: 0},
+    {userName: 'usuario3', password: 'pass3', mail: 'usuario3@gmail.com', tries: 0}];
+
 let ask = true;
 
 function checkUsername(users, input) {
 
-    for (let i = 0; i < users.length; i++) {
+    for (let user of users) {
 
-        if (users[i] === input) {
+        if (user.userName === input) {
 
             console.log('Usuario existe.');
             return true;
@@ -15,12 +18,15 @@ function checkUsername(users, input) {
     return false;
 }
 
-function checkPassForUser(object, user, pass) {
+function checkPassForUser(users, userCheck, passCheck) {
 
-    if (object[user] === pass) {
-        
-        console.log('Contraseña existe.');
-        return true;
+    for (let user of users) {
+
+        if (user.userName === userCheck && user.password === passCheck) {
+
+            console.log('Contraseña existe.');
+            return true;
+        }
     }
 
     return false;
@@ -32,54 +38,70 @@ function mainLogin() {
 
         let option = prompt('Desea Iniciar Sesion o Crear Usuario?');
 
-        if (option.toLowerCase() == 'iniciar sesion') {
+        if (option.toLowerCase() === 'iniciar sesion') {
 
-            let users = Object.keys(userANDpass);
             let userInput = prompt('Ingrese Nombre de Usuario');
             let userExists = checkUsername(users, userInput);
 
             if (userExists) {
 
+                let currentUser = users.find(user => user.userName === userInput);
+
+                if (currentUser.tries >= 3) {
+
+                    alert('La contraseña de este usuario se encuentra bloqueada.\n\nIngrese su mail para desbloquearla.');
+                    let mailInput = prompt('Ingrese su mail.');
+
+                    if (currentUser.mail === mailInput) {
+
+                        let userIndex = users.findIndex(user => user.userName === userInput);
+                        users[userIndex].tries = 0;
+                        alert('Contraseña desbloqueada. Ingrese su contraseña.');
+                    } else {
+
+                        alert('El mail ingresado es incorrecto.');
+                        continue;
+                    }
+                }
+
                 let passInput = prompt('Ingrese su contraseña');
-                let passExists = checkPassForUser(userANDpass, userInput, passInput);
+                let passExists = checkPassForUser(users, userInput, passInput);
 
                 if (passExists) {
 
-                    alert('Inicio de sesión exitoso. Bienvenido.')
+                    alert('Inicio de sesión exitoso. Bienvenido.');
                     ask = false;
-                    break;
-                }
+                } else {
 
-                alert('La contraseña ingresada es incorrecta. Favor vuelva a intentar');
-            } else if (!userExists) {
-                
+                    let userIndex = users.findIndex(user => user.userName === userInput);
+                    users[userIndex].tries++;
+                    alert('La contraseña ingresada es incorrecta. Favor vuelva a intentar.\n\nRecuerde que si falla 3 veces el ingreso de contraseña se bloqueará su usuario.');
+                }
+            } else {
+
                 alert('El usuario ingresado no existe o es incorrecto. Favor reingrese el usuario.\n\n(Favor recordar que el usuario diferencia minúsculas de mayúsculas)');
             }
 
-            alert('Falló el inicio de sesión.');
+        } else if (option.toLowerCase() === 'crear usuario') {
 
-        } else if (option.toLowerCase() == 'crear usuario') {
-
-            let userCreated = false;
-            let users = Object.keys(userANDpass);
             let userInput = prompt('Ingrese Nombre de Usuario');
             let userExists = checkUsername(users, userInput);
 
             if (!userExists) {
 
                 let passInput = prompt('Ingrese su contraseña');
-                userANDpass[userInput] = passInput;
+                let mailInput = prompt('Ingrese su mail.');
+                users.push({userName: userInput, password: passInput, mail: mailInput, tries: 0});
+                alert('Creación de usuario exitosa.\n\nUsuario: ' + userInput + '\nContraseña: ' + passInput + '\nMail: ' + mailInput + '\n\nInicie sesión.');
+            } else {
 
-                alert('Creación de usuario exitosa.\n\nUsuario: ' + userInput + '\nContraseña: ' + passInput + '\n\nInicie sesión.');
-                userCreated = true;
-            } else if (!userCreated) {
-                
                 alert('El usuario ingresado ya existe.');
             }
+        } else {
+            
+            alert('Opción inválida, favor ingrese "Iniciar Sesion" o "Crear Usuario".');
         }
-
-        alert('Favor ingrese "Iniciar Sesion" o "Crear Usuario".\n\n(Tenga en cuenta que las opciones deben ser escritas con espacios y sin tildes)');
-    } while (ask)
+    } while (ask);
 }
 
 mainLogin();
