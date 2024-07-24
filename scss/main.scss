@@ -1,0 +1,11 @@
+//Utilidades
+/*Importamos las variables principales y el Reset*/
+@import './utilities/colors';
+@import './utilities/fonts';
+@import './utilities/reset';
+
+//Sections
+/*Estructura base del cuerpo del sitio*/
+@import './sections/body';
+/*Se crea el Header que estará en todo el sitio*/
+@import './sections/header';
