@@ -4,4 +4,4 @@ xml2.xml
 node_modules/
 package-lock.json
 package.json
-.vscode/settings.json
+.vscode/
