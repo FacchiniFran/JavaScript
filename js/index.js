@@ -51,6 +51,10 @@ function cierreForm() {
     activate(userInput);
     activate(passInput);
     activate(createUser);
+    userInput.value = "";
+    passInput.value = "";
+    mailInput.value = "";
+    passRepeat.value = "";
     deactivate(loginForm);
     deactivate(mailInput);
     deactivate(passRepeat);
@@ -66,7 +70,7 @@ loginButton.addEventListener('click', () => {
     } else {
         Swal.fire({
             color: "#fff",
-            icon: "warning",
+            icon: "question",
             background: "#2c2c2c",
             showCancelButton: true,
             confirmButtonText: "Si",
@@ -123,7 +127,6 @@ enter.addEventListener('click', () => {
             let userIndex = users.findIndex(user => user.userName === name);
             if (users[userIndex].tries >= 3) {
                 Swal.fire({
-                    width: 600,
                     icon: "info",
                     color: "#fff",
                     padding: "1.5em",
@@ -135,7 +138,6 @@ enter.addEventListener('click', () => {
                 let passExists = checkPassForUser(users, name, password);
                 if (passExists) {
                     Swal.fire({
-                        width: 600,
                         color: "#fff",
                         icon: "success",
                         padding: "1.5em",
@@ -148,67 +150,106 @@ enter.addEventListener('click', () => {
                     passInput.value = "";
                     cierreForm();
                 } else {
-                    users[userIndex].tries++;
-                    Swal.fire({
-                        width: 600,
-                        icon: "error",
-                        color: "#fff",
-                        padding: "1.5em",
-                        background: "#2c2c2c",
-                        confirmButtonColor: "#0050c1",
-                        text: "La contraseña ingresada es incorrecta. Favor vuelva a intentar.Recuerde que si falla 3 veces el ingreso de contraseña se bloqueará su usuario"
-                    });
+                    if (password === "") {
+                        Swal.fire({
+                            icon: "error",
+                            color: "#fff",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            text: "No se ha ingresado una contraseña"
+                        });
+                    } else {
+                        users[userIndex].tries++;
+                        Swal.fire({
+                            icon: "error",
+                            color: "#fff",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            text: "La contraseña ingresada es incorrecta. Favor vuelva a intentar.Recuerde que si falla 3 veces el ingreso de contraseña se bloqueará su usuario"
+                        });
+                    }
                 }
             }
         } else {
-            Swal.fire({
-                width: 600,
-                icon: "error",
-                color: "#fff",
-                padding: "1.5em",
-                background: "#2c2c2c",
-                confirmButtonColor: "#0050c1",
-                text: "El usuario ingresado no existe o es incorrecto. Favor reingrese el usuario.Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
-            });
+            if (name === "") {
+                Swal.fire({
+                    icon: "error",
+                    color: "#fff",
+                    padding: "1.5em",
+                    background: "#2c2c2c",
+                    confirmButtonColor: "#0050c1",
+                    text: "No se ha ingresado un usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    color: "#fff",
+                    padding: "1.5em",
+                    background: "#2c2c2c",
+                    confirmButtonColor: "#0050c1",
+                    text: "El usuario ingresado no existe o es incorrecto. Favor reingrese el usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
+                });
+            }
         }
     }
     if (enter.value === "Crear Usuario") {
         let userExists = checkUsername(users, name);
         if (!userExists) {
-            if (password === passRepeat.value) {
-                users.push({ userName: name, password: password, mail: mailInput, tries: 0 });
+            if (name === "") {
                 Swal.fire({
-                    width: 600,
+                    icon: "error",
                     color: "#fff",
-                    icon: "success",
                     padding: "1.5em",
                     background: "#2c2c2c",
                     confirmButtonColor: "#0050c1",
-                    title: "Usuario creado exitosamente. Inicie sesión"
+                    text: "No se ha ingresado un usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
                 });
-                activate(forget);
-                activate(createUser);
-                userInput.value = "";
-                passInput.value = "";
-                passRepeat.value = "";
-                deactivate(passRepeat);
-                enter.value = "Iniciar Sesión";
             } else {
-                Swal.fire({
-                    width: 600,
-                    icon: "info",
-                    color: "#fff",
-                    padding: "1.5em",
-                    background: "#2c2c2c",
-                    confirmButtonColor: "#0050c1",
-                    title: "Las contraseñas ingresadas no coinciden. Intente nuevamente"
-                });
-                passInput.value = "";
-                passRepeat.value = "";
+                if (password === "") {
+                    Swal.fire({
+                        icon: "error",
+                        color: "#fff",
+                        padding: "1.5em",
+                        background: "#2c2c2c",
+                        confirmButtonColor: "#0050c1",
+                        text: "No se ha ingresado una contraseña"
+                    });
+                } else {
+                    if (password === passRepeat.value) {
+                        users.push({ userName: name, password: password, mail: mailInput, tries: 0 });
+                        Swal.fire({
+                            color: "#fff",
+                            icon: "success",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            title: "Usuario creado exitosamente. Inicie sesión"
+                        });
+                        activate(forget);
+                        activate(createUser);
+                        userInput.value = "";
+                        passInput.value = "";
+                        passRepeat.value = "";
+                        deactivate(passRepeat);
+                        enter.value = "Iniciar Sesión";
+                    } else {
+                        Swal.fire({
+                            icon: "info",
+                            color: "#fff",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            title: "Las contraseñas ingresadas no coinciden. Intente nuevamente"
+                        });
+                        passInput.value = "";
+                        passRepeat.value = "";
+                    }
+                }
             }
         } else {
             Swal.fire({
-                width: 600,
                 color: "#fff",
                 icon: "warning",
                 padding: "1.5em",
@@ -216,6 +257,87 @@ enter.addEventListener('click', () => {
                 confirmButtonColor: "#0050c1",
                 title: "El usuario ingresado ya existe"
             });
+        }
+    }
+    if (enter.value === "Verificar") {
+        let userExists = checkUsername(users, name);
+        if (userExists) {
+            let userIndex = users.findIndex(user => user.userName === name);
+            if (users[userIndex].mail === mailInput.value) {
+                if (users[userIndex].tries >= 3) {
+                    Swal.fire({
+                        color: "#fff",
+                        icon: "success",
+                        padding: "1.5em",
+                        background: "#2c2c2c",
+                        confirmButtonColor: "#0050c1",
+                        title: "Usuario desbloqueado",
+                        text: "La contraseña del usuario '" + name + "' es: '" + users[userIndex].password + "'"
+                    });
+                } else {
+                    let triesLeft = 3 - users[userIndex].tries;
+                    Swal.fire({
+                        icon: "info",
+                        color: "#fff",
+                        padding: "1.5em",
+                        background: "#2c2c2c",
+                        confirmButtonColor: "#0050c1",
+                        title: "El usuario '" + name + "' tiene " + triesLeft + " intentos restantes.",
+                        text: "La contraseña del usuario '" + name + "' es: '" + users[userIndex].password + "'"
+                    });
+                }
+            } else {
+                if (!mailInput.value.includes("@") || !mailInput.value.includes(".")) {
+                    Swal.fire({
+                        icon: "error",
+                        color: "#fff",
+                        padding: "1.5em",
+                        background: "#2c2c2c",
+                        confirmButtonColor: "#0050c1",
+                        text: "El mail ingresado no cumple con el formato correspondiente"
+                    });
+                } else {
+                    if (mailInput.value === "") {
+                        Swal.fire({
+                            icon: "error",
+                            color: "#fff",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            text: "No se ha ingresado un mail"
+                        });
+                    } else {
+                        Swal.fire({
+                            color: "#fff",
+                            icon: "error",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            title: "El mail ingresado no corresponde al usuario"
+                        });
+                    }
+                }
+            }
+        } else {
+            if (name === "") {
+                Swal.fire({
+                    icon: "error",
+                    color: "#fff",
+                    padding: "1.5em",
+                    background: "#2c2c2c",
+                    confirmButtonColor: "#0050c1",
+                    text: "No se ha ingresado un usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    color: "#fff",
+                    padding: "1.5em",
+                    background: "#2c2c2c",
+                    confirmButtonColor: "#0050c1",
+                    text: "El usuario ingresado no existe o es incorrecto. Favor reingrese el usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
+                });
+            }
         }
     }
 });
