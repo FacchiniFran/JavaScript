@@ -12,9 +12,6 @@ const createUser = document.getElementById("createUser");
 const passRepeat = document.getElementById("passRepeat");
 const loginForm = document.getElementById("loginFormContainer");
 
-/*Se genera un array de usuarios*/
-const users = [{ userName: 'Franco', password: 'fran29', mail: 'facchinifn@gmail.com', tries: 0 }];
-
 /*Función de chequeo de usuario*/
 function checkUsername(users, input) {
     for (let user of users) {
@@ -119,6 +116,7 @@ create.addEventListener('click', () => {
 
 /*Operador principal*/
 enter.addEventListener('click', () => {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
     const name = userInput.value;
     const password = passInput.value;
     if (enter.value === "Iniciar Sesión") {
@@ -169,6 +167,7 @@ enter.addEventListener('click', () => {
                             confirmButtonColor: "#0050c1",
                             text: "La contraseña ingresada es incorrecta. Favor vuelva a intentar.Recuerde que si falla 3 veces el ingreso de contraseña se bloqueará su usuario"
                         });
+                        localStorage.setItem("users", JSON.stringify(users));
                     }
                 }
             }
@@ -219,6 +218,7 @@ enter.addEventListener('click', () => {
                 } else {
                     if (password === passRepeat.value) {
                         users.push({ userName: name, password: password, mail: mailInput, tries: 0 });
+                        localStorage.setItem("users", JSON.stringify(users));
                         Swal.fire({
                             color: "#fff",
                             icon: "success",
@@ -227,13 +227,13 @@ enter.addEventListener('click', () => {
                             confirmButtonColor: "#0050c1",
                             title: "Usuario creado exitosamente. Inicie sesión"
                         });
-                        activate(forget);
-                        activate(createUser);
                         userInput.value = "";
                         passInput.value = "";
                         passRepeat.value = "";
-                        deactivate(passRepeat);
                         enter.value = "Iniciar Sesión";
+                        activate(forget);
+                        activate(createUser);
+                        deactivate(passRepeat);
                     } else {
                         Swal.fire({
                             icon: "info",
@@ -274,6 +274,7 @@ enter.addEventListener('click', () => {
                         title: "Usuario desbloqueado",
                         text: "La contraseña del usuario '" + name + "' es: '" + users[userIndex].password + "'"
                     });
+                    localStorage.setItem("users", JSON.stringify(users));
                 } else {
                     let triesLeft = 3 - users[userIndex].tries;
                     Swal.fire({
