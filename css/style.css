@@ -17,7 +17,6 @@ body {
 
 /*Se crea el Header que estará en todo el sitio*/
 header {
-  z-index: 96;
   width: 100%;
   height: 38%;
   display: grid;
@@ -51,28 +50,97 @@ header {
 .login {
   top: 2%;
   right: 2%;
-  width: 30%;
   opacity: 0.5;
   display: block;
+  padding-left: 3%;
   grid-area: login;
+  padding-right: 3%;
+  width: fit-content;
   position: absolute;
   border-radius: 18px;
   background-color: black; }
   .login:hover {
-    opacity: 1; }
-    .login:hover a {
+    opacity: 1;
+    cursor: pointer; }
+    .login:hover p {
       text-shadow: 0 0 10px white, 0 0 21px white, 0 0 42px #0050c1, 0 0 82px #0050c1, 0 0 92px #0050c1, 0 0 102px #0050c1, 0 0 151px #0050c1; }
 
-.login a {
+#loginTxt {
   color: white;
-  margin-left: 17%;
+  margin-bottom: 0%;
+  text-align: center;
   font-weight: bolder;
-  text-decoration: none;
   font-family: "Lucida Console", Monaco, monospace; }
 
-#signOut {
-  width: 40%; }
+.inactive {
+  display: none; }
 
-#signOutTxt {
-  margin-left: 0%;
-  padding-left: 13%; }
+#loginFormContainer {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5); }
+  #loginFormContainer #loginForm {
+    left: 35%;
+    top: 27.5%;
+    width: 30%;
+    height: 45%;
+    color: silver;
+    position: absolute;
+    border-radius: 18px;
+    font-family: "Lucida Console", Monaco, monospace;
+    border: 3px solid #0050c1;
+    text-align: center !important;
+    background-color: #2c2c2c;
+    box-shadow: 2px 2px 8px 5px #0050c1; }
+    #loginFormContainer #loginForm #closeForm {
+      top: 1%;
+      right: 1%;
+      color: white;
+      padding-left: 1%;
+      padding-right: 1%;
+      position: absolute;
+      border-radius: 20px;
+      font-weight: bolder;
+      background-color: red;
+      border: 1px solid silver; }
+      #loginFormContainer #loginForm #closeForm:hover {
+        cursor: pointer;
+        box-shadow: 1px 0px 2px 1px black; }
+    #loginFormContainer #loginForm h1 {
+      margin-top: 3%;
+      padding-bottom: 5%;
+      border-bottom: 5px solid #0050c1; }
+    #loginFormContainer #loginForm input {
+      width: 70%;
+      height: 10%;
+      margin-top: 3%;
+      text-align: center;
+      border-radius: 10px; }
+    #loginFormContainer #loginForm #forget {
+      margin-top: 1%;
+      font-size: small;
+      color: #0050c1;
+      width: fit-content;
+      text-decoration: none; }
+      #loginFormContainer #loginForm #forget:hover {
+        color: white;
+        cursor: pointer; }
+    #loginFormContainer #loginForm #enter {
+      height: 18%;
+      color: white;
+      font-size: x-large;
+      background-color: #0050c1; }
+    #loginFormContainer #loginForm #createUser {
+      margin-top: 3%;
+      font-size: large; }
+      #loginFormContainer #loginForm #createUser #create {
+        margin-top: 0%;
+        margin-left: 4%;
+        color: #0050c1;
+        width: fit-content;
+        text-decoration: none; }
+        #loginFormContainer #loginForm #createUser #create:hover {
+          color: white;
+          cursor: pointer; }
