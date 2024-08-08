@@ -124,7 +124,7 @@ function setMain() {
         }
         if (currentUser.profile === "Reader") {
             userStatus.textContent = "Usuario con perfil de Lector";
-            icon.src = "./svg/userCLector.svg";
+            icon.src = "./svg/userReader.svg";
         }
     }
 }
