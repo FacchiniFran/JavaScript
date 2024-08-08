@@ -1,0 +1,5 @@
+[
+    { "userName": "Franco", "password": "Franco29*", "profile": "Admin" , "mail": "facchinifn@gmail.com", "tries": 0 },
+    { "userName": "Matias", "password": "Matias27!", "profile": "Editor" , "mail": "matikpo@gmail.com", "tries": 1 },
+    { "userName": "Vanessa", "password": "Vane357#", "profile": "Reader" , "mail": "vanePena@gmail.com", "tries": 3 }
+]

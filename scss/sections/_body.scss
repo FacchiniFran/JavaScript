@@ -5,3 +5,126 @@ body {
     background-position: center center;
     background: url('../images/background.png') repeat;
 }
+
+#userContainer {
+    width: 50%;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 30px;
+    font-family: $mainFont;
+    border: 3px solid $manaBlue;
+    background-color: $footerBlack;
+    box-shadow: 2px 2px 8px 5px $manaBlue;
+
+    #userStatus {
+        color: white;
+        padding-top: 1%;
+        text-align: center;
+        text-decoration: underline;
+    }
+
+    #userIcon {
+        width: 50%;
+        margin-top: 2%;
+        margin-left: 25%;
+        margin-bottom: 2%;
+        filter: invert(100%);
+    }
+}
+
+.inactive {
+    display: none;
+}
+
+#loginFormContainer {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: $loginBackground;
+
+    #loginForm {
+        left: 35%;
+        top: 27.5%;
+        width: 30%;
+        color: silver;
+        position: absolute;
+        border-radius: 18px;
+        height: max-content;
+        font-family: $mainFont;
+        border: 3px solid $manaBlue;
+        text-align: center !important;
+        background-color: $footerBlack;
+        box-shadow: 2px 2px 8px 5px $manaBlue;
+
+        #closeForm {
+            top: 1%;
+            right: 1%;
+            color: white;
+            padding-left: 1%;
+            padding-right: 1%;
+            position: absolute;
+            border-radius: 20px;
+            font-weight: bolder;
+            background-color: red;
+            border: 1px solid silver;
+
+            &:hover {
+                cursor: pointer;
+                box-shadow: 1px 0px 2px 1px black;
+            }
+        }
+
+        h1 {
+            margin-top: 3%;
+            padding-bottom: 5%;
+            border-bottom: 5px solid $manaBlue;
+        }
+
+        input {
+            width: 70%;
+            margin-top: 3%;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        #forget {
+            margin-top: 1%;
+            font-size: small;
+            color: $manaBlue;
+            width: fit-content;
+            text-decoration: none;
+
+            &:hover {
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        #enter {
+            height: 18%;
+            color: white;
+            margin-bottom: 3%;
+            font-size: x-large;
+            background-color: $manaBlue;
+        }
+
+        #createUser {
+            margin-top: 3%;
+            font-size: large;
+
+            #create {
+                margin-top: 0%;
+                margin-left: 4%;
+                color: $manaBlue;
+                width: fit-content;
+                text-decoration: none;
+    
+                &:hover {
+                    color: white;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
