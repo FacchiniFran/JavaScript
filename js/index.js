@@ -131,7 +131,6 @@ function setMain() {
 
 //Función que cierra el formulario
 function clsForm() {
-    setMain();
     stopTimer();
     activate(forget);
     activate(userInput);
@@ -147,6 +146,7 @@ function clsForm() {
     enter.value = "Iniciar Sesión";
     enter.removeAttribute("style");
     formTitle.textContent = "Inicio de Sesión";
+    setMain();
 }
 
 //Evento que abre el formulario o cierra la sesión
@@ -325,7 +325,6 @@ enter.addEventListener('click', () => {
                     text: "No se ha ingresado un usuario. Favor recuerde que el usuario diferencia minúsculas de mayúsculas"
                 });
             } else {
-
                 if (password === "") {
                     Swal.fire({
                         icon: "error",
@@ -336,59 +335,70 @@ enter.addEventListener('click', () => {
                         text: "No se ha ingresado una contraseña"
                     });
                 } else {
-                    if (password === passRepeat.value) {
-                        if (mailInput.value === "") {
-                            Swal.fire({
-                                icon: "error",
-                                color: "#fff",
-                                padding: "1.5em",
-                                background: "#2c2c2c",
-                                confirmButtonColor: "#0050c1",
-                                text: "No se ha ingresado un mail"
-                            });
-                        } else {
-                            if (!mailInput.value.includes("@") || !mailInput.value.includes(".")) {
+                    if (password.length < 8) {
+                        Swal.fire({
+                            icon: "error",
+                            color: "#fff",
+                            padding: "1.5em",
+                            background: "#2c2c2c",
+                            confirmButtonColor: "#0050c1",
+                            text: "La contraseña debe tener al menos 8 caracteres"
+                        });
+                    } else {
+                        if (password === passRepeat.value) {
+                            if (mailInput.value === "") {
                                 Swal.fire({
                                     icon: "error",
                                     color: "#fff",
                                     padding: "1.5em",
                                     background: "#2c2c2c",
                                     confirmButtonColor: "#0050c1",
-                                    text: "El mail ingresado no cumple con el formato correspondiente"
+                                    text: "No se ha ingresado un mail"
                                 });
                             } else {
-                                usersArray.push(new User(name, password, "Reader", eMail));
-                                localStorage.setItem("users", JSON.stringify(usersArray));
-                                Swal.fire({
-                                    color: "#fff",
-                                    icon: "success",
-                                    padding: "1.5em",
-                                    background: "#2c2c2c",
-                                    confirmButtonColor: "#0050c1",
-                                    title: "Usuario lector creado exitosamente. Inicie sesión"
-                                });
-                                activate(forget);
-                                activate(createUser);
-                                userInput.value = "";
-                                passInput.value = "";
-                                mailInput.value = "";
-                                passRepeat.value = "";
-                                deactivate(mailInput);
-                                deactivate(passRepeat);
-                                enter.value = "Iniciar Sesión";
+                                if (!mailInput.value.includes("@") || !mailInput.value.includes(".")) {
+                                    Swal.fire({
+                                        icon: "error",
+                                        color: "#fff",
+                                        padding: "1.5em",
+                                        background: "#2c2c2c",
+                                        confirmButtonColor: "#0050c1",
+                                        text: "El mail ingresado no cumple con el formato correspondiente"
+                                    });
+                                } else {
+                                    usersArray.push(new User(name, password, "Reader", eMail));
+                                    localStorage.setItem("users", JSON.stringify(usersArray));
+                                    Swal.fire({
+                                        color: "#fff",
+                                        icon: "success",
+                                        padding: "1.5em",
+                                        background: "#2c2c2c",
+                                        confirmButtonColor: "#0050c1",
+                                        title: "Usuario lector creado exitosamente. Inicie sesión"
+                                    });
+                                    activate(forget);
+                                    activate(createUser);
+                                    userInput.value = "";
+                                    passInput.value = "";
+                                    mailInput.value = "";
+                                    passRepeat.value = "";
+                                    deactivate(mailInput);
+                                    deactivate(passRepeat);
+                                    enter.value = "Iniciar Sesión";
+                                }
                             }
+                        } else {
+                            Swal.fire({
+                                icon: "info",
+                                color: "#fff",
+                                padding: "1.5em",
+                                background: "#2c2c2c",
+                                confirmButtonColor: "#0050c1",
+                                title: "Las contraseñas ingresadas no coinciden. Intente nuevamente"
+                            });
+                            passInput.value = "";
+                            passRepeat.value = "";
                         }
-                    } else {
-                        Swal.fire({
-                            icon: "info",
-                            color: "#fff",
-                            padding: "1.5em",
-                            background: "#2c2c2c",
-                            confirmButtonColor: "#0050c1",
-                            title: "Las contraseñas ingresadas no coinciden. Intente nuevamente"
-                        });
-                        passInput.value = "";
-                        passRepeat.value = "";
                     }
                 }
             }
